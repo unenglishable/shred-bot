@@ -113,3 +113,5 @@ def get_report_for_location(location):
         results.append("%s\n%s" % (ratings[i],  waves[i]))
     return results
 
+def get_locations():
+    return surfline.keys()

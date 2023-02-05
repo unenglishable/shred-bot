@@ -4,6 +4,23 @@ import json
 import time
 # https://services.surfline.com/kbyg/spots/forecasts/weather?spotId=5cbf8d85e7b15800014909e8&days=2&intervalHours=3
 
+def get_data(location, context):
+    url = urljoin(surfline_api_base_url, context)
+    days = 2
+    interval_hours = 3
+    params = urlencode({
+        'spotId': surfline[location]["id"],
+        'days': days,
+        'intervalHours': interval_hours
+        })
+    url = "%s?%s" % (url, params)
+    print(f"requesting url: {url}")
+
+    response = urlopen(url)
+    data = response.read()
+    data_json = json.loads(data)
+    return (data, data_json)
+
 surfline_api_base_url = "https://services.surfline.com/kbyg/spots/forecasts/"
 surfline = {
         "north-ocean-beach": {
@@ -54,25 +71,9 @@ surfline = {
         }
 
 context = "rating"
-url = urljoin(surfline_api_base_url, context)
-print(f"request url: {url}")
 location = "pacifica-linda-mar"
-days = 2
-interval_hours = 3
-params = urlencode({
-    'spotId': surfline[location]["id"],
-    'days': days,
-    'intervalHours': interval_hours
-    })
-url = "%s?%s" % (url, params)
-print(f"{url}")
 
-response = urlopen(url)
-data = response.read()
-data_json = json.loads(data)
-
-print(f"{data}")
-print(f"{data_json}")
+(data, data_json) = get_data(location, context)
 
 for rating in data_json["data"]["rating"]:
     date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(rating["timestamp"]))

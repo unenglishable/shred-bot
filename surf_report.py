@@ -96,6 +96,8 @@ surfline = {
         }
 
 def get_report_for_location(location):
+    if location not in surfline:
+        return "Location %s not available" % location
     contexts = [
             "rating",
             "wave",

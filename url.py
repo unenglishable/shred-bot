@@ -47,18 +47,22 @@ surfline = {
             "name": "Maverick's"
             },
         "princeton-jetty": {
-            "link": "https://www.surfline.com/surf-report/princeton-jetty/5842041f4e65fad6a7708970"
+            "link": "https://www.surfline.com/surf-report/princeton-jetty/5842041f4e65fad6a7708970",
             "id": "5842041f4e65fad6a7708970",
             "name": "Princeton Jetty"
             }
         }
 
-url = urljoin(surfline_api_base_url, "rating")
-print(f"{url}")
+context = "rating"
+url = urljoin(surfline_api_base_url, context)
+print(f"request url: {url}")
+location = "pacifica-linda-mar"
+days = 2
+interval_hours = 3
 params = urlencode({
-    'spotId': surfline["pacifica-linda-mar"]["id"],
-    'days': 2,
-    'intervalHours': 3
+    'spotId': surfline[location]["id"],
+    'days': days,
+    'intervalHours': interval_hours
     })
 url = "%s?%s" % (url, params)
 print(f"{url}")

@@ -68,6 +68,13 @@ url = "%s?%s" % (url, params)
 print(f"{url}")
 
 response = urlopen(url)
-# data_json = json.loads(response.read())
-#
-# print(f"{data_json}")
+data = response.read()
+data_json = json.loads(data)
+
+print(f"{data}")
+print(f"{data_json}")
+
+for rating in data_json["data"]["rating"]:
+    date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(rating["timestamp"]))
+    grade = rating["rating"]
+    print(f"{date}: {grade}")

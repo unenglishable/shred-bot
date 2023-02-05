@@ -21,6 +21,14 @@ def get_data(location, context):
     data_json = json.loads(data)["data"][context]
     return (data, data_json)
 
+def parse_ratings(ratings):
+    result = []
+    for rating in ratings:
+        date = time.strftime('%m/%d@%H:%M', time.localtime(rating["timestamp"]))
+        grade = rating["rating"]["key"]
+        result.append("%s %s" % (date, grade))
+    return result
+
 surfline_api_base_url = "https://services.surfline.com/kbyg/spots/forecasts/"
 surfline = {
         "north-ocean-beach": {

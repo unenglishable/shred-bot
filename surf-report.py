@@ -28,6 +28,23 @@ def parse_ratings(ratings):
         grade = rating["rating"]["key"]
         result.append("%s %s" % (date, grade))
     return result
+def parse_waves(waves_data):
+    result = []
+    for wave_data in waves_data:
+        date = time.strftime('%m/%d@%H:%M', time.localtime(wave_data["timestamp"]))
+        surf_min = wave_data["surf"]["min"]
+        surf_max = wave_data["surf"]["max"]
+        primary_swell = wave_data["swells"][0]
+        primary_swell_height = primary_swell["height"]
+        primary_swell_direction = primary_swell["direction"]
+        if primary_swell_direction == 0 and primary_swell_height == 0:
+            primary_swell = wave_data["swells"][1]
+            primary_swell_height = primary_swell["height"]
+            primary_swell_direction = primary_swell["direction"]
+        result.append("\theight: %s-%sft\tprimary swell: %sft @ %s" %
+                      (surf_min, surf_max, primary_swell_height, primary_swell_direction))
+        # print(f"{date}\theight: {surf_min}-{surf_max}ft\tprimary swell: {primary_swell_height}ft @ {primary_swell_direction}deg")
+    return result
 
 surfline_api_base_url = "https://services.surfline.com/kbyg/spots/forecasts/"
 surfline = {

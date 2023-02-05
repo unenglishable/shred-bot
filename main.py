@@ -1,5 +1,6 @@
 import discord
 from decouple import config
+import surf_report
 
 TOKEN = config('TOKEN')
 
@@ -19,5 +20,7 @@ async def on_message(message):
         return
     if message.content.startswith('$shred'):
         await message.channel.send('shoots')
+    if message.content.startswith('$locations'):
+        await message.channel.send(surf_report.get_locations())
 
 client.run(TOKEN)

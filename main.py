@@ -1,5 +1,7 @@
 import discord
-import os
+from decouple import config
+
+TOKEN = config('TOKEN')
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -18,4 +20,4 @@ async def on_message(message):
     if message.content.startswith('$shred'):
         await message.channel.send('shoots')
 
-client.run(os.getenv('TOKEN'))
+client.run(TOKEN)

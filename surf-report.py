@@ -18,7 +18,7 @@ def get_data(location, context):
 
     response = urlopen(url)
     data = response.read()
-    data_json = json.loads(data)
+    data_json = json.loads(data)["data"][context]
     return (data, data_json)
 
 surfline_api_base_url = "https://services.surfline.com/kbyg/spots/forecasts/"

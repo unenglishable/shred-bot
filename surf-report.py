@@ -95,12 +95,21 @@ surfline = {
             }
         }
 
-context = "rating"
-location = "pacifica-linda-mar"
+def get_report_for_location(location):
+    contexts = [
+            "rating",
+            "wave",
+            "wind",
+            "tides"
+            ]
+    results = []
+    for context in contexts:
+        (data, data_json) = get_data(location, context)
+        results[context] = data_json
 
-(data, data_json) = get_data(location, context)
+    ratings = parse_ratings(results["rating"])
+    waves = parse_waves(results["wave"])
+    for i in range(len(ratings)):
+        results.append("%s\n%s" % (ratings[i],  waves[i]))
+    return results
 
-for rating in data_json["data"]["rating"]:
-    date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(rating["timestamp"]))
-    grade = rating["rating"]
-    print(f"{date}: {grade}")

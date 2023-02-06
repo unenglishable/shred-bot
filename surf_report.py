@@ -104,16 +104,18 @@ def get_report_for_location(location):
             "wind",
             "tides"
             ]
-    results = []
+    results = {}
     for context in contexts:
         (data, data_json) = get_data(location, context)
         results[context] = data_json
 
     ratings = parse_ratings(results["rating"])
     waves = parse_waves(results["wave"])
+
+    reply = "%s (%s)\n" % (surfline[location]["name"], surfline[location]["link"])
     for i in range(len(ratings)):
-        results.append("%s\n%s" % (ratings[i],  waves[i]))
-    return results
+        reply += "%s\n%s\n" % (ratings[i],  waves[i])
+    return reply
 
 def get_locations():
     return surfline.keys()

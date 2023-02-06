@@ -22,5 +22,12 @@ async def on_message(message):
         await message.channel.send('shoots')
     if message.content.startswith('$locations'):
         await message.channel.send(surf_report.get_locations())
+    if message.content.startswith('$report'):
+        command = message.content.split(" ")
+        if len(command) < 2:
+            await message.channel.send("Usage: `$report <location>`\nSee `$locations` to view available locations")
+            return
+        location = command[1]
+        await message.channel.send(surf_report.get_report_for_location(location))
 
 client.run(TOKEN)

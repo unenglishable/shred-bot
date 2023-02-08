@@ -35,12 +35,12 @@ def parse_waves(waves_data):
         surf_min = wave_data["surf"]["min"]
         surf_max = wave_data["surf"]["max"]
         primary_swell = wave_data["swells"][0]
-        primary_swell_height = primary_swell["height"]
-        primary_swell_direction = primary_swell["direction"]
+        primary_swell_height = round(primary_swell["height"], 1)
+        primary_swell_direction = round(primary_swell["direction"])
         if primary_swell_direction == 0 and primary_swell_height == 0:
             primary_swell = wave_data["swells"][1]
             primary_swell_height = round(primary_swell["height"], 1)
-            primary_swell_direction = primary_swell["direction"]
+            primary_swell_direction = round(primary_swell["direction"])
         result.append("\theight: %s-%sft\tprimary swell: %sft @ %s" %
                       (surf_min, surf_max, primary_swell_height, primary_swell_direction))
         # print(f"{date}\theight: {surf_min}-{surf_max}ft\tprimary swell: {primary_swell_height}ft @ {primary_swell_direction}deg")
